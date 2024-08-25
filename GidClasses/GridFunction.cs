@@ -37,7 +37,7 @@ namespace GridClasses
             }
         }
 
-        public static string GetStringRef(DataGridView dgv, int _columnIndex) //Get string value using column index
+        public static string? GetStringRef(DataGridView dgv, int _columnIndex) //Get string value using column index
         {
             object? cellValue;
             cellValue = GetValue(dgv, _columnIndex);
@@ -51,7 +51,7 @@ namespace GridClasses
             }
         }
 
-        public static string GetStringRef(DataGridView dgv, string _columnIndex) //Get string value using column name
+        public static string? GetStringRef(DataGridView dgv, string _columnIndex) //Get string value using column name
         {
             object? cellValue;
             cellValue = GetValue(dgv, _columnIndex);
@@ -275,6 +275,127 @@ namespace GridClasses
                 }
             }
             return rowCount; //Return position starting from 1
+        }
+
+        //-----------------Edit on/off-----------------------------------------------------------------//
+        // Return true is at least one column was modified, false otherwise
+
+        public static bool EnableEditColumns(DataGridView dgv, List<string> writeColumns)
+        {
+            bool result = false;
+            foreach (string columnName in writeColumns)
+            {
+                //Processing here
+                DataGridViewColumn column = dgv.Columns[columnName];
+                if (column != null)
+                {
+                    column.ReadOnly = false;
+                    result = true;
+                }
+            }
+            return result;
+        }
+
+        public static bool EnableEditColumns(DataGridView dgv, List<int> writeColumns)
+        {
+            bool result = false;
+            foreach (int columnIndex in writeColumns)
+            {
+                //Processing here
+                if (columnIndex >= 0 && columnIndex < dgv.Columns.Count)
+                {
+
+                    DataGridViewColumn column = dgv.Columns[columnIndex];
+                    column.ReadOnly = false;
+                    result = true;
+                }
+            }
+            return result;
+        }
+
+        public static bool EnableEditColumns(DataGridView dgv, string writeColumn)
+        {
+            bool result = false;
+            //Processing here
+            DataGridViewColumn column = dgv.Columns[writeColumn];
+            if (column != null)
+            {
+                column.ReadOnly = false;
+                result = true;
+            }
+            return result;
+        }
+
+        public static bool EnableEditColumns(DataGridView dgv, int writeColumn)
+        {
+            bool result = false;
+            //Processing here
+            if (writeColumn >= 0 && writeColumn < dgv.Columns.Count)
+            {
+                DataGridViewColumn column = dgv.Columns[writeColumn];
+                column.ReadOnly = false;
+                result = true;
+            }
+            return result;
+        }
+
+
+        public static bool DisableEditColumns(DataGridView dgv, List<string> readOnlyColumns)
+        {
+            bool result = false;
+            foreach (string columnName in readOnlyColumns)
+            {
+                //Processing here
+                DataGridViewColumn column = dgv.Columns[columnName];
+                if (column != null)
+                {
+                    column.ReadOnly = true;
+                    result = true;
+                }
+            }
+            return result;
+        }
+
+        public static bool DisableEditColumns(DataGridView dgv, List<int> readOnlyColumns)
+        {
+            bool result = false;
+            foreach (int columnIndex in readOnlyColumns)
+            {
+                //Processing here
+                if (columnIndex >= 0 && columnIndex < dgv.Columns.Count)
+                {
+                    DataGridViewColumn column = dgv.Columns[columnIndex];
+                    column.ReadOnly = true;
+                    result = true;
+                }
+            }
+            return result;
+        }
+
+        public static bool DisableEditColumns(DataGridView dgv, string readOnlyColumn)
+        {
+            bool result = false;
+            //Processing here
+            DataGridViewColumn column = dgv.Columns[readOnlyColumn];
+            if (column != null)
+            {
+                column.ReadOnly = true;
+                result = true;
+            }
+            return result;
+        }
+
+        public static bool DisableEditColumns(DataGridView dgv, int readOnlyColumn)
+        {
+            bool result = false;
+            //Processing here
+            if (readOnlyColumn >= 0 && readOnlyColumn < dgv.Columns.Count)
+            {
+                DataGridViewColumn column = dgv.Columns[readOnlyColumn];
+                column.ReadOnly = true;
+                result = true;
+            }
+            return result;
         }
     }
 }
